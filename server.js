@@ -1,8 +1,10 @@
-  const express = require("express");
+ require('dotenv').config();
+ const express = require("express");
   const mongoose = require("mongoose");
   const path = require("path");
   const session = require("express-session");
   const bcrypt = require("bcrypt");
+  const MongoStore = require("connect-mongo");
 
   const app = express();
   const PORT = process.env.PORT || 8000;
@@ -21,16 +23,23 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("MongoDB Error:", err));
 
+
+
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static("public"));
+
 
 app.use(session({
-  secret: "secretkey",
+  secret: process.env.SESSION_SECRET,   // from .env
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,     // from .env
+    collectionName: "sessions",
+    ttl: 14 * 24 * 60 * 60
+  })
 }));
 
 app.set("view engine", "ejs");
