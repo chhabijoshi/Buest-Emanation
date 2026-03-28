@@ -1,11 +1,14 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const path = require("path");
-const session = require("express-session");
-const bcrypt = require("bcrypt");
+  const express = require("express");
+  const mongoose = require("mongoose");
+  const path = require("path");
+  const session = require("express-session");
+  const bcrypt = require("bcrypt");
 
-const port = 8000;
-const app = express();
+  const app = express();
+  const PORT = process.env.PORT || 8000;
+  const cors = require("cors");
+  app.use(cors());
+
 
 // MODELS
 const Notice = require("./models/notic");
@@ -362,6 +365,6 @@ app.use((err, req, res, next) => {
 
 
 
-app.listen(port, "0.0.0.0", () => {
-  console.log("Server running on port 8000");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
