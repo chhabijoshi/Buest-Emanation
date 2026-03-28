@@ -17,9 +17,9 @@ const upload = require("./middleware/multer");
 const Student = require("./models/student_regrestration");
 
 // DATABASE
-mongoose.connect("mongodb://127.0.0.1:27017/teachfest")
-.then(() => console.log("MongoDB Connected"))
-.catch((err) => console.log("MongoDB Error:", err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log("MongoDB Error:", err));
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
