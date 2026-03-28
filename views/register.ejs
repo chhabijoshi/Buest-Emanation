@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Register</title>
+
+  <link rel="stylesheet" href="/register.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="form-box">
+
+      <h1 class="logo">Admin Panel</h1>
+      <p class="tagline">Create admin account</p>
+
+      <form action="/admin/register" method="POST">
+
+        <input type="text" name="name" placeholder="Full Name" required>
+
+        <input type="email" name="email" placeholder="Email Address" required>
+
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Sign up</button>
+
+      </form>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <p class="login-text">
+        Already have an account? 
+        <a href="/admin/login">Log in</a>
+      </p>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
