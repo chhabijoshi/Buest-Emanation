@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "builds":[{"src": "backhand/server.js", "use":"vercel/node"}],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "backhand/server.js"
+    }
+  ]
+}
