@@ -2,10 +2,12 @@ const express = require("express");
 const connectDB = require('./config/database.js');
 const path = require("path");
 const session = require("express-session");
+const cors = require("cors");
 
 
 const PORT =  process.env.PORT || 8000;
 const app = express();
+
 
 // MODELS
 const Notice = require("./models/notic");
@@ -30,6 +32,19 @@ app.use(session({
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../fronted/views"));
+
+
+
+app.use(cors({
+  origin: [
+    "https://buest-emanation-9.onrender.com",
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+
 
 // 🔐 AUTH MIDDLEWARE
 const isAdminLoggedIn = (req, res, next) => {
