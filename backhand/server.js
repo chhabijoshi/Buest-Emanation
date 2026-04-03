@@ -25,11 +25,10 @@ app.use(express.static(path.join(__dirname, "../fronted/public")));
 app.use(express.static("public"));
 
 app.use(session({
-  secret: "secretkey",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../fronted/views"));
 
