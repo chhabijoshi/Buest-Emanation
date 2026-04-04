@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/admin_panel_notice.css">
+  <meta charset="UTF-8">
+  <title>Upload Notice</title>
+  <link rel="stylesheet" href="/admin_panel_notice.css">
 </head>
 <body>
- 
 
 <div class="upload-wrapper">
-    <div class="upload-card">
-      <h1>Upload Notice</h1>
-      <p class="subtitle">Upload your notice file with a title in a simple and clean way.</p>
+  <div class="upload-card">
+    <h1>Upload Notice</h1>
+    <p class="subtitle">Add a notice with an image. Make sure all fields are filled.</p>
 
-      <form action="/admin_panel/notice" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="title">Notice Title</label>
-          <input type="text" name="title" placeholder="Notice Title" required>
-        </div>
+    <form action="/admin_panel/notice" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="title">Notice Title</label>
+        <input type="text" id="title" name="title" required>
+      </div>
 
-        <div class="form-group">
-          <label for="fileUpload">Choose File</label>
-          <div class="file-box">
-            <input type="file" name="photo" required>
-          </div>
-        </div>
+      <div class="form-group file-box">
+        <label for="photo">Select Image</label>
+        <input type="file" id="photo" name="photo" required>
+      </div>
 
-        <button type="submit">Upload Notice</button>
-      </form>
-    </div>
+      <button type="submit" class="upload-btn">Upload Notice</button>
+    </form>
   </div>
-</form>
+</div>
+
 </body>
 </html>

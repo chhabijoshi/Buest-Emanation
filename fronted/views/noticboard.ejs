@@ -17,17 +17,18 @@
 
 <section class="notice-board">
 
-<% if(notices.length === 0){ %>
-<p class="empty">No notices uploaded yet</p>
+<% if(!notices || notices.length === 0){ %>
+  <p class="empty">No notices uploaded yet</p>
 <% } %>
 
 <% notices.forEach(notice => { %>
 
 <div class="notice">
+  <h3><%= notice.title %></h3>
 
-<h3><%= notice.title %></h3>
-
-<img src="/uploads/<%= notice.image %>" alt="notice">
+  <% if(notice.image){ %>
+    <img src="/uploads/<%= notice.image %>" alt="notice">
+  <% } %>
 
 </div>
 

@@ -31,7 +31,7 @@ app.use(session({
 }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../fronted/views"));
-
+app.use("/uploads", express.static("uploads"));
 
 
 app.use(cors({
@@ -71,8 +71,13 @@ app.get("/Home/gallary", (req, res) => {
 });
 
 app.get("/Home/noticboard", async (req, res) => {
-  const notices = await Notice.find().sort({ _id: -1 });
-  res.render("noticboard", { notices });
+  try {
+    const notices = await Notice.find().sort({ _id: -1 });
+    res.render("noticboard", { notices });
+  } catch (err) {
+    console.error("NOTICE ERROR:", err);
+    res.status(500).send("Error loading notices ❌");
+  }
 });
 
 // ===================
@@ -193,14 +198,26 @@ app.get("/admin_panel/notice", isAdminLoggedIn, (req, res) => {
 });
 
 // Save Notice
-app.post("/admin_panel/notice", isAdminLoggedIn, upload.single("photo"), async (req, res) => {
-  const newNotice = new Notice({
-    title: req.body.title,
-    image: req.file.filename
-  });
+app.post("/admin_panel/notice", upload.single("photo"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.send("Image is required ❌");
+    }
 
-  await newNotice.save();
-  res.redirect("/admin_panel/notice");
+    const newNotice = new Notice({
+      title: req.body.title,
+      image: req.file.filename
+    });
+
+    await newNotice.save();
+
+    // ✅ redirect to notice board page
+    res.redirect("/Home/noticboard");
+
+  } catch (err) {
+    console.error("UPLOAD ERROR:", err);
+    res.status(500).send("Server error ❌");
+  }
 });
 
 // Manage Notices
@@ -328,7 +345,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err); // log full error for debugging
   res.status(500).send("Something went wrong");
 });
 
